@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<style type="text/css">
+#myCanvas{
+	background: #ccc;
+
+}
+
+</style>
+
+
+
+<script src="http://f3.v.veimg.cn/f2e/gallery/jquery/1.9.1/jquery.min.js"></script>
+<!-- <script src="http://f3.v.veimg.cn/f2e/gallery/jquery-mobile/1.4.2/custom/pagecontainer/jquery.mobile.custom.min.js?v=20140603055213"></script>-->
+
+<title>grap pwd</title>
+
+</head>
+<body>
+<div style="width:200px; height:300px"></div>
+
+<canvas id="myCanvas" width="500" height="500"></canvas>
+
+<script>
+
+
+
+/*ctx.strokeStyle="#f0";
+ctx.lineWidth = 2;
+ctx.moveTo(10, 10);
+ctx.lineTo(100, 100);
+ctx.lineTo(150, 130);
+ctx.stroke();*/
+
+
+/*
+ctx.beginPath();
+ctx.arc(200, 200, 15, 0, 2 * Math.PI, false);
+ctx.fillStyle="white";
+//ctx.stroke();
+ctx.fill();
+ctx.closePath();
+*/
+var grapPwd = function(opts){
+
+	this._defaultOpts = {
+		canvasId: '',
+		num: 4,
+		radius: 15,
+	};
+
+	this.ctx = null;
+
+	this.options = $.extend({}, this._defaultOpts, opts);
+
+
+	this.init  = function(){
+		var canvasEle = $("#" + this.options.canvasId)[0];
+		this.ctx = canvasEle.getContext("2d");
+		with(this.options){
+			var margin = this.calcMargin(canvasEle.width, num, radius);
+
+			for (var i = 0; i < num; i++) {
+				for (var j = 0; j < num; j++) {
+					posX =  (j * margin) + (j * 2 * radius)  + radius;
+					posY =  (i *margin)  + (i * 2 * radius) + radius;
+					this.drawCircle(posX, posY, radius);
+				}
+			}
+		}
+	}
+
+	this.init();
+
+}
+
+grapPwd.prototype.calcMargin =  function (width, num, radius){
+		return Math.floor((width - 2 * radius * num) / (num - 1));
+}
+
+grapPwd.prototype.drawCircle = function (posX, posY, radius){
+		this.ctx.beginPath();
+		this.ctx.arc(posX, posY, radius, 0, 2 * Math.PI, false);
+		this.ctx.fillStyle = "white";
+		this.ctx.fill();
+		this.ctx.closePath();
+}
+
+
+var opts = {canvasId: 'myCanvas', 'num' : 4};
+new grapPwd(opts);
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
+
